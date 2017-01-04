@@ -1,60 +1,87 @@
-Disposable
-==========
+## Disposable email domains
 
-[![GoDoc](https://godoc.org/github.com/lavab/disposable?status.svg)](https://godoc.org/github.com/lavab/disposable)
+[![npm](https://badge.fury.io/js/disposable-email.svg)](https://www.npmjs.com/package/disposable-email)
+[![GoDoc](https://godoc.org/github.com/andreis/disposable?status.svg)](https://godoc.org/github.com/andreis/disposable)
 
-This is a simple, auto-updating (sort of) list of domains of temporary (or *disposable*) mailboxes.
+A collection of domains for disposable email services like [10MinuteMail](http://10minutemail.com) and [GuerrillaMail](https://www.guerrillamail.com). Also, some 🛠 to make your life easier.
 
-It can be used to quickly weed out people not really interested in your service.
+### Why?
 
-Usage
------
+Use it to validate email addresses on sign up, or just to see how many real email addresses you have in your system.
 
-### Use it in your Go code
+### Usage
+
+* list
+
+A [file](https://raw.githubusercontent.com/andreis/disposable/master/domains.txt)
+containing a sorted list of domains, one per line.
+
+```
+curl https://raw.githubusercontent.com/andreis/disposable/master/domains.txt
+```
+
+* JSON array
+
+A [file](https://raw.githubusercontent.com/andreis/disposable/master/domains.json)
+containing a sorted array of domains, in JSON format.
+
+```
+curl https://raw.githubusercontent.com/andreis/disposable/master/domains.json
+```
+
+* javascript
+
+Install the npm package `disposable-email`. Validate synchronously or with a callback.
+
+```lang=shell
+npm i --save disposable-email
+```
+
+```lang=javascript
+var disposable = require('disposable-email');
+
+disposable.validate('gmail.com');
+// true
+
+disposable.validate('foo@gmail.com');
+// true
+
+disposable.validate('gmail.com', console.log);
+// undefined
+// null true
+```
+
+* Go
 
 ```lang=go
-import "github.com/lavab/disposable"
+import "github.com/andreis/disposable"
 
 if disposable.Domain("gmail.com") {
     panic("Uh oh!")
 }
 ```
 
-### Get a plaintext or json file
+### Update the list of domains
 
-Curling is fun:
+To update the list of domains run `.generate` (requires `python3`), and optionally submit a PR.
 
-```lang=shell
-# One domain per line
-curl https://raw.githubusercontent.com/lavab/disposable/master/domains.txt
-# A JSON array
-curl https://raw.githubusercontent.com/lavab/disposable/master/domains.json
+```lang=bash
+$ ./.generate
+Fetched 1110 domains
+ - 312 domain(s) added
+ - 110 domain(s) removed
 ```
 
-You can just download the files ([txt](https://raw.githubusercontent.com/lavab/disposable/master/domains.txt) or [json](https://raw.githubusercontent.com/lavab/disposable/master/domains.json)).
+### Credits
 
-### Run the generator
+-	https://github.com/adamloving
+-	https://github.com/michenriksen
+-	https://github.com/ivolo
 
-`disposable` comes batteries-included. You can run `.generate/generate.go` to get a more up-to-date list of domains. However, some links might be dead. PRs are appreciated.
+### CDN
 
-```lang=shell
-go get -u github.com/lavab/disposable
-# It's important to be in the correct folder when running the command.
-cd $GOHOME/src/github.com/lavab/disposable
-go run .generate/generate.go
-```
+Production: https://rawcdn.githack.com/andreis/disposable/master/domains.json
 
-Credit
-------
+Development: https://raw.githack.com/andreis/disposable/master/domains.json
 
--	https://gist.github.com/adamloving/4401361
--	https://gist.github.com/michenriksen/8710649
--	https://github.com/ivolo/disposable-email-domains
-
-Andrei's recommendations
-------------------------
-
-I recommend these services, they're fast and have good, non-spammy UI:
-
--	http://10minutemail.com (one of the sites for which I disable the ad-blocker)
--	https://www.guerrillamail.com (https)
+by: https://raw.githack.com/
